@@ -1,10 +1,12 @@
 import express, { Express } from "express";
+import cors from "cors";
 import dotenv from "dotenv";
 import multer from "multer";
 import Docker from "dockerode";
 import stream, { Readable } from "stream";
 import dateFormat from "dateformat";
 import path from "path";
+
 const app: Express = express();
 const docker: Docker = new Docker();
 const upload = multer({
@@ -84,6 +86,7 @@ const buildImage = () => {
   });
 };
 
+app.use(cors());
 app.post(
   "/validate",
   upload.fields([{ name: "datafile" }, { name: "shapesfile" }]),
