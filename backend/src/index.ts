@@ -131,7 +131,7 @@ app.post(
             "isoDateTime"
           )}] Validation completed`
         );
-        res.setHeader("content-type", "text/plain");
+        res.setHeader("content-type", "text/turtle");
         res.send(await streamToString(outputStream));
       }
     );
