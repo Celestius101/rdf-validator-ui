@@ -6,6 +6,7 @@ import Docker from "dockerode";
 import stream, { Readable } from "stream";
 import dateFormat from "dateformat";
 import path from "path";
+import os from "os";
 
 const app: Express = express();
 const docker: Docker = new Docker();
@@ -23,7 +24,19 @@ dotenv.config();
 
 const port = process.env.PORT || 3000;
 const shacl_api_version = process.env.SHACL_API_VERSION || "1.4.3";
+
 const docker_image_name = `ghcr.io/topquadrant/shacl:${shacl_api_version}`;
+
+const getArchBase = () => {
+  switch (os.arch()) {
+    case "x32":
+    case "x64":
+      return "eclipse-temurin:11-alpine";
+    case "arm":
+    case "arm64":
+      return "amazoncorretto:11-alpine3.18-jdk";
+  }
+};
 
 const streamToString = (stream) => {
   const chunks = [];
@@ -64,7 +77,7 @@ const buildImage = () => {
         t: docker_image_name,
         buildargs: {
           VERSION: shacl_api_version,
-          ARCH_BASE: "eclipse-temurin:11-alpine",
+          ARCH_BASE: getArchBase(),
         },
         version: "2",
       },
@@ -146,10 +159,9 @@ docker
   })
   .then((images) => {
     return images.length === 0
-      ? Promise.all([
-          pullImage("eclipse-temurin:11-alpine"),
-          pullImage("alpine:3.18"),
-        ]).then(buildImage)
+      ? Promise.all([pullImage(getArchBase()), pullImage("alpine:3.18")]).then(
+          buildImage
+        )
       : [Promise.resolve([])];
   })
   .then(() => {
