@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import multer from "multer";
 import Docker from "dockerode";
-import stream, { Readable } from "stream";
+import stream from "stream";
 import dateFormat from "dateformat";
 import path from "path";
 import os from "os";
@@ -27,6 +27,12 @@ const shacl_api_version = process.env.SHACL_API_VERSION || "1.4.3";
 
 const docker_image_name = `ghcr.io/topquadrant/shacl:${shacl_api_version}`;
 
+/**
+ * Determines the relevant image to pull when building TopQuadrant API
+ * based on the processor architecture.
+ *
+ * @return The name of the docker image to pull
+ */
 const getArchBase = () => {
   switch (os.arch()) {
     case "x32":
@@ -38,6 +44,13 @@ const getArchBase = () => {
   }
 };
 
+/**
+ * Converts the content of a stream to a string by aggregating its content gradually
+ * in an array.
+ *
+ * @param stream The stream to convert to a string
+ * @return The string resulting from the conversion
+ */
 const streamToString = (stream) => {
   const chunks = [];
   return new Promise((resolve, reject) => {
@@ -47,6 +60,13 @@ const streamToString = (stream) => {
   });
 };
 
+/**
+ * Pulls a specified image with Dockerode to be made available for
+ * the docker daemon.
+ *
+ * @param imageName The name of the image to pull
+ * @return A promise resolving when the image is pulled or rejecting when an error is encountered
+ */
 const pullImage = (imageName) => {
   return new Promise((resolve, reject) => {
     console.log("Pulling image", imageName, "...");
@@ -67,6 +87,11 @@ const pullImage = (imageName) => {
   });
 };
 
+/**
+ * Builds the image ghcr.io/topquadrant/shacl:{VERSION}
+ *
+ * @return A promise resolving when the image is built or rejecting when an error is encountered.
+ */
 const buildImage = () => {
   return new Promise((resolve, reject) => {
     console.log("Building docker image:", docker_image_name, "...");
@@ -99,6 +124,7 @@ const buildImage = () => {
   });
 };
 
+// Setting up /validate endpoint
 app.use(cors());
 app.post(
   "/validate",
@@ -151,6 +177,12 @@ app.post(
   }
 );
 
+/* 
+  Main execution pipeline
+  1. Check for already present docker image
+  2. Pull images and build image if needed
+  3. Server starts listening
+*/
 docker
   .listImages({
     filters: {

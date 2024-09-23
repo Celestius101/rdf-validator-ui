@@ -9,6 +9,13 @@ type Props = {
     onSelectFile: (file: File) => void;
 };
 
+/**
+ * Dynamically returns a border color based on the drag status of the component.
+ *
+ * @param isDragAccept A boolean representing whether the drag would be accepted
+ * @param isDragReject A boolean representing whether the drag would be rejected
+ * @returns '#2e7d32' if drag is accepted, '#d32f2f' if rejected and a light '#1976d2' otherwise
+ */
 const getBorderColor = (isDragAccept: boolean, isDragReject: boolean) => {
     if (isDragAccept) {
         return '#2e7d32';
@@ -39,6 +46,13 @@ const Container = styled('div', {
     })
 );
 
+/**
+ * A function component representing a drop zone for file upload.
+ *
+ * @param text A dynamic text to be displayed inside the drop zone
+ * @param onSelectFile A listener executed when the file is accepted as uploaded by the drop zone
+ * @returns The function component
+ */
 const CustomDropZone: FC<Props> = ({ text, onSelectFile }) => {
     const [file, setFile] = useState<File>();
 

@@ -58,6 +58,15 @@ const WordArt = styled('img')(() => ({
     alignSelf: 'center',
 }));
 
+/**
+ * The main function component of the application. It is essentially a stepper consisting of the following steps :
+ *  1. Upload RDF data
+ *  2. Upload SHACL file
+ *  (3. Send validation to backend)
+ *  4. Display resulting validation report
+ *
+ * @return The main function component
+ */
 const ValidatorStepper: FC = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [skipped, setSkipped] = useState(new Set<number>());
@@ -139,7 +148,7 @@ const ValidatorStepper: FC = () => {
                     shapesfile: shapesfile!,
                 },
                 {
-                    onSuccess(data, _variables, _context) {
+                    onSuccess(data) {
                         setReport(data);
                         let newSkipped = skipped;
                         if (isStepSkipped(activeStep)) {
@@ -192,7 +201,9 @@ const ValidatorStepper: FC = () => {
                         <Button
                             variant="contained"
                             color="inherit"
-                            disabled={activeStep === 0}
+                            disabled={
+                                activeStep === 0 || validationMutation.isPending
+                            }
                             onClick={handleBack}
                             sx={{ mr: 1 }}
                         >

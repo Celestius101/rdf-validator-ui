@@ -576,14 +576,14 @@
   resolved "https://registry.npmjs.org/@mui/core-downloads-tracker/-/core-downloads-tracker-6.0.2.tgz"
   integrity sha512-Cg68oOlAfbJgMgvbCwcX3Y3HdygCl6X1nREYTdEWcEKUQhNarrC45Cc35mP+zA7p3ZXE/7FLiaTCCgwuSoef/Q==
 
-"@mui/icons-material@^6.1.0":
+"@mui/icons-material@6.1.0":
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-6.1.0.tgz#6a9f7ffc1a191331f8907419cc2b2082f253a9b6"
   integrity sha512-HxfB0jxwiMTYMN8gAnYn3avbF1aDrqBEuGIj6JDQ3YkLl650E1Wy8AIhwwyP47wdrv0at9aAR0iOO6VLb74A9w==
   dependencies:
     "@babel/runtime" "^7.25.6"
 
-"@mui/lab@^6.0.0-beta.9":
+"@mui/lab@6.0.0-beta.9":
   version "6.0.0-beta.9"
   resolved "https://registry.yarnpkg.com/@mui/lab/-/lab-6.0.0-beta.9.tgz#7e560d6ad006c1749f5e9ca6eaba0a8726217f57"
   integrity sha512-rgwgf9mNUpXxPlI3tnM3i+HNAtDZ2amAollDqbe6RZ/3fltcir/o/0zBvnZRkJIBOAk6qIGmL59GCasuQQtPKA==
@@ -1540,7 +1540,7 @@ chalk@^4.0.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-clownface@^2.0.2:
+clownface@2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/clownface/-/clownface-2.0.2.tgz#634b0656b50f9b4e0d51a41ac16d32b0e82b0174"
   integrity sha512-HjTYqVXiCrw4FmoAWF46aQ3c2OmdVLoqZrAGkowdWWUoBBIcBht55pOxkyvoVe2BsPE/HqMzfnu51JpgqM4KEg==
@@ -2351,7 +2351,7 @@ ms@^2.1.3:
   resolved "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
 
-n3@^1.17.2, n3@^1.21.1:
+n3@1.21.1, n3@^1.17.2:
   version "1.21.1"
   resolved "https://registry.yarnpkg.com/n3/-/n3-1.21.1.tgz#550919e7fb0c87f35c26098c9002f572c1e2f862"
   integrity sha512-Mmv+kdO2wERsyBtkPpuLA+KaMlhdoIgUitj46lYz31fybj5dLgiubRMxJMwR35mPBdqxtMKMk3e1MFB4kpWsVA==
@@ -2406,7 +2406,7 @@ nodeify-fetch@^3.1.0:
     readable-stream "^4.2.0"
     stream-chunks "^1.0.0"
 
-notistack@^3.0.1:
+notistack@3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/notistack/-/notistack-3.0.1.tgz#daf59888ab7e2c30a1fa8f71f9cba2978773236e"
   integrity sha512-ntVZXXgSQH5WYfyU+3HfcXuKaapzAJ8fBLQ/G618rn3yvSzEbnOB8ZSOwhX+dAORy/lw+GC2N061JA0+gYWTVA==

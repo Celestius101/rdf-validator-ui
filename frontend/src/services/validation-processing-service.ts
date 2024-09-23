@@ -37,6 +37,12 @@ const prefixes = {
     'http://www.w3.org/2001/XMLSchema#': 'xsd',
 };
 
+/**
+ * Replaces the namespace of an RDF node by its prefix
+ *
+ * @param value The string in which to replace the namespace
+ * @return The provided string with prefix
+ */
 const toPrefixed = (value?: string): string | undefined => {
     if (!value) return undefined;
     for (const [uri, prefix] of Object.entries(prefixes)) {
@@ -47,6 +53,12 @@ const toPrefixed = (value?: string): string | undefined => {
     return value;
 };
 
+/**
+ * Converts a turtle file (in string form) into a browsable RDF Dataset.
+ *
+ * @param result A turtle file representing a RDF graph
+ * @returns A promise resolving when the string is converted or rejecting when an error is encountered
+ */
 export const processValidationResult = (
     result: string
 ): Promise<DatasetExt> => {
@@ -55,24 +67,27 @@ export const processValidationResult = (
 
     return new Promise((resolve, reject) => {
         try {
-            parser.parse(
-                result,
-                (error: Error, quad: QuadExt, _prefixes: unknown) => {
-                    if (error) {
-                        reject(error);
-                    } else if (quad) {
-                        dataset.add(quad);
-                    } else {
-                        resolve(dataset);
-                    }
+            parser.parse(result, (error: Error, quad: QuadExt) => {
+                if (error) {
+                    reject(error);
+                } else if (quad) {
+                    dataset.add(quad);
+                } else {
+                    resolve(dataset);
                 }
-            );
+            });
         } catch (err) {
             reject(err);
         }
     });
 };
 
+/**
+ * Extracts relevant information in the validation report from a given RDF dataset.
+ *
+ * @param dataset The dataset from which to extracts the validation report information
+ * @returns A boolean saying whether the validation succeeded and an array of results giving more details what failed otherwise.
+ */
 export const extractValidationReport = (
     dataset: DatasetExt
 ): ValidationReport => {

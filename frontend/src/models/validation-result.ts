@@ -9,6 +9,12 @@ export type ValidationResult = {
 
 export type Severity = 'Violation' | 'Warning' | 'Info';
 
+/**
+ * Maps the value of a RDF node regarding severity of validation mismatch.
+ *
+ * @param raw The value of the RDF node
+ * @returns 'Violation' | 'Warning' | 'Info'
+ */
 export const mapSeverity = (raw?: string): Severity => {
     switch (raw) {
         case 'http://www.w3.org/ns/shacl#Violation':

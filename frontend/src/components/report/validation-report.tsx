@@ -11,29 +11,41 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Chip from '@mui/material/Chip';
 import { Box, Stack, Typography } from '@mui/material';
 
+/**
+ * Maps validation report severities violation to chip color
+ *
+ * @param severity The severity of a violation from the validation report
+ * @return The mapped color : 'info' | 'warning' | 'error'
+ */
+const toChipSeverity = (severity: Severity): 'info' | 'warning' | 'error' => {
+    switch (severity) {
+        case 'Info':
+            return 'info';
+        case 'Warning':
+            return 'warning';
+        case 'Violation':
+            return 'error';
+    }
+};
+
 type Props = {
     dataset: DatasetExt;
 };
 
+/**
+ * A function component representing a validation report
+ * displaying whether it is conform. If it's not, the reasons why
+ * are display additionally.
+ *
+ * @param dataset The dataset containing the validation report
+ * @returns The function component
+ */
 const ValidationReport: FC<Props> = ({ dataset }) => {
     const [report, setReport] = useState<Report>();
 
     useEffect(() => {
         setReport(extractValidationReport(dataset));
     }, [dataset]);
-
-    const toChipSeverity = (
-        severity: Severity
-    ): 'info' | 'warning' | 'error' => {
-        switch (severity) {
-            case 'Info':
-                return 'info';
-            case 'Warning':
-                return 'warning';
-            case 'Violation':
-                return 'error';
-        }
-    };
 
     return (
         report && (

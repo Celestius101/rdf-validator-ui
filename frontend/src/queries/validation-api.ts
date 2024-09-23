@@ -9,6 +9,15 @@ type ValidationParams = {
     shapesfile: File;
 };
 
+/**
+ * Sends the backend a RDF datafile to be validated along a SHACL shapesfile and processes the response.
+ *
+ * @param {ValidationParams} {
+ *     datafile,
+ *     shapesfile
+ * } The files sent to the backend
+ * @return A Promise resolving when the backend answers and rejecting when an error is encountered.
+ */
 const validate = ({
     datafile,
     shapesfile,
