@@ -80,7 +80,9 @@ const CustomDropZone: FC<Props> = ({ text, onSelectFile }) => {
                     >
                         <input {...getInputProps()} />
                         {!file && !isDragReject && !isDragAccept && (
-                            <Typography sx={{ textAlign: 'center' }}>
+                            <Typography
+                                sx={{ textAlign: 'center', width: '250px' }}
+                            >
                                 {text}
                             </Typography>
                         )}

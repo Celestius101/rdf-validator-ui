@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { styled } from '@mui/material/styles';
 import CustomDropZone from '../drag-and-drop/custom-drop-zone';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { FC } from 'react';
 import ValidationReport from '../report/validation-report';
 import { useValidateFilesMutation } from '../../queries/validation-query-hooks';
@@ -70,7 +70,6 @@ const WordArt = styled('img')(() => ({
 const ValidatorStepper: FC = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [skipped, setSkipped] = useState(new Set<number>());
-
     const [datafile, setDataFile] = useState<File>();
     const [shapesfile, setShapesFile] = useState<File>();
     const [report, setReport] = useState<DatasetExt>();
@@ -86,7 +85,7 @@ const ValidatorStepper: FC = () => {
                     'Upload RDF data',
                     <CustomDropZone
                         key="rdf"
-                        text="Drag 'n' drop a RDF graph here or click to select it"
+                        text="Drag and drop a RDF graph here or click to select it"
                         onSelectFile={setDataFile}
                     />,
                 ],
@@ -94,7 +93,7 @@ const ValidatorStepper: FC = () => {
                     'Upload SHACL shape',
                     <CustomDropZone
                         key="shacl"
-                        text="Drag 'n' drop a SHACL shape here or click to select it"
+                        text="Drag and drop a SHACL shape here or click to select it"
                         onSelectFile={setShapesFile}
                     />,
                 ],
@@ -103,19 +102,12 @@ const ValidatorStepper: FC = () => {
         [report]
     );
 
-    const isStepSkipped = (step: number) => {
-        return skipped.has(step);
-    };
+    const isStepSkipped = useCallback(
+        (step: number) => skipped.has(step),
+        [skipped]
+    );
 
-    const handleReset = () => {
-        setActiveStep(0);
-        setDataFile(undefined);
-        setShapesFile(undefined);
-        setSkipped(new Set<number>());
-        setReport(undefined);
-    };
-
-    const getNextButtonLabel = () => {
+    const getNextButtonLabel = useCallback(() => {
         switch (activeStep) {
             case 0:
                 return 'Next';
@@ -124,14 +116,15 @@ const ValidatorStepper: FC = () => {
             case 2:
                 return 'Reset';
         }
-    };
+    }, [activeStep]);
 
-    const handleNext = () => {
+    const handleNext = useCallback(() => {
         if (activeStep === 2) {
             handleReset();
             return;
         }
 
+        // Normal handling of next button -> add activeStep to skipped and increment
         if (activeStep !== 1) {
             let newSkipped = skipped;
             if (isStepSkipped(activeStep)) {
@@ -142,6 +135,7 @@ const ValidatorStepper: FC = () => {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
             setSkipped(newSkipped);
         } else {
+            // If validation button is pressed, we transfer request to backend and act accordingly upon response
             validationMutation.mutate(
                 {
                     datafile: datafile!,
@@ -168,12 +162,28 @@ const ValidatorStepper: FC = () => {
                 }
             );
         }
-    };
+    }, [
+        activeStep,
+        datafile,
+        enqueueSnackbar,
+        isStepSkipped,
+        shapesfile,
+        skipped,
+        validationMutation,
+    ]);
 
-    const handleBack = () => {
+    const handleBack = useCallback(() => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
         if (activeStep === 1) setDataFile(undefined);
         if (activeStep === 2) setShapesFile(undefined);
+    }, [activeStep]);
+
+    const handleReset = () => {
+        setActiveStep(0);
+        setDataFile(undefined);
+        setShapesFile(undefined);
+        setSkipped(new Set<number>());
+        setReport(undefined);
     };
 
     return (
