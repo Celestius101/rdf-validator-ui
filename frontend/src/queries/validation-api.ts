@@ -26,14 +26,12 @@ const validate = ({
     formData.append('datafile', datafile);
     formData.append('shapesfile', shapesfile);
 
-    return axios({
-        method: 'POST',
-        url: `${VALIDATION_URL}/validate`,
-        data: formData,
-        headers: {
-            'Content-Type': 'multipart/form-data',
-        },
-    })
+    return axios
+        .post(`${VALIDATION_URL}/validate`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
         .then((response) => response.data)
         .then(processValidationResult)
         .catch((error) => {
@@ -42,7 +40,6 @@ const validate = ({
                     const status = error.response.status;
                     if (status === 401) throw Error('Unauthorized');
                     if (status === 403) throw Error('Forbidden');
-                    if (status === 409) throw Error('Already exists');
                     if (status === 500)
                         throw Error('Error. Please contact your administrator');
                 }

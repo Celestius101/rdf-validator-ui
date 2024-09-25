@@ -1,9 +1,10 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import prettier from 'eslint-plugin-prettier'
-import tseslint from 'typescript-eslint'
+import js from '@eslint/js';
+import globals from 'globals';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import vitestGlobals from 'eslint-plugin-vitest-globals';
+import prettier from 'eslint-p  lugin-prettier';
+import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
     { ignores: ['dist'] },
@@ -17,7 +18,8 @@ export default tseslint.config(
         plugins: {
             'react-hooks': reactHooks,
             'react-refresh': reactRefresh,
-            prettier: prettier,
+            prettier,
+            vitestGlobals,
         },
         rules: {
             ...reactHooks.configs.recommended.rules,
@@ -27,4 +29,4 @@ export default tseslint.config(
             ],
         },
     }
-)
+);

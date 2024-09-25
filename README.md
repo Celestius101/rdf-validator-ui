@@ -30,6 +30,7 @@ _RDF Validator_ is a user interface which improves the understandability and usa
 - [Installation](#installation)
 - [Usage](#usage)
   - [Development](#development)
+  - [Test](#test)
   - [Production](#production)
   - [Linting](#linting)
 - [Deep dive](#deep_dive)
@@ -42,7 +43,7 @@ _RDF Validator_ is a user interface which improves the understandability and usa
 
 - Docker 23.0 or higher **with BuildKit enabled**
 - Yarn 1.22.x or higher || npm 10.8.x or higher
-- Node 22.7.x or higher
+- Node 20.17.0 or lower ([js-dom issues](https://github.com/jsdom/jsdom/issues/3613))
 - Windows, macOS, or Linux operating system
 - A stable and good internet connection
 
@@ -72,7 +73,7 @@ yarn install
 
 ## Usage
 
-The project proposes a few scripts to develop on it, build it for prod or lint all the files to a coherent codestyle with eslint/prettier.
+The project proposes a few scripts to develop on it, run unit tests on your code, build it for prod or lint all the files to a coherent codestyle with eslint/prettier.
 
 ### Development
 
@@ -83,6 +84,10 @@ By using `yarn dev`, you can easily setup a dev server accessible on your browse
 This makes use of the ultra fast HMR dev server provided by Vite, reloading only relevant modified elements without needing to restart the server between code changes.
 
 :warning: Make sure to launch both the frontend and backend dev server for them to interact properly (the backend will listen on `http://localhost:3000`). :warning:
+
+### Tests
+
+The frontend possesses units tests that you can run with `yarn test` while being in the `frontend` folder.
 
 ### Production
 

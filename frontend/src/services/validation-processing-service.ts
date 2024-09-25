@@ -7,7 +7,7 @@ import QuadExt from 'rdf-ext/lib/Quad';
 import Clownface from 'clownface';
 import { mapSeverity, ValidationResult } from '../models/validation-result';
 
-const ns = {
+export const ns = {
     dash: namespace('http://datashapes.org/dash#'),
     ex: namespace('http://example.org'),
     graphql: namespace('http://datashapes.org/graphql#'),
@@ -22,7 +22,7 @@ const ns = {
     xsd: namespace('http://www.w3.org/2001/XMLSchema#'),
 };
 
-const prefixes = {
+export const prefixes = {
     'http://example.org/': 'ex:',
     'http://schema.org/': 'schema:',
     'http://www.w3.org/ns/shacl#': 'sh:',
@@ -43,7 +43,7 @@ const prefixes = {
  * @param value The string in which to replace the namespace
  * @return The provided string with prefix
  */
-const toPrefixed = (value?: string): string | undefined => {
+export const toPrefixed = (value?: string): string | undefined => {
     if (!value) return undefined;
     for (const [uri, prefix] of Object.entries(prefixes)) {
         if (value.startsWith(uri)) {

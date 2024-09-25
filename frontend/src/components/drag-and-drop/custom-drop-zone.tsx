@@ -1,8 +1,10 @@
 import Dropzone from 'react-dropzone';
 import { FC, useState } from 'react';
 import styled from '@emotion/styled';
-import { CheckCircle, FilePresent } from '@mui/icons-material';
-import { lighten, Typography } from '@mui/material';
+import { lighten } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import CheckCircle from '@mui/icons-material/CheckCircle';
+import FilePresent from '@mui/icons-material/FilePresent';
 
 type Props = {
     text: string;
@@ -78,7 +80,7 @@ const CustomDropZone: FC<Props> = ({ text, onSelectFile }) => {
                     <Container
                         {...getRootProps({ isDragAccept, isDragReject })}
                     >
-                        <input {...getInputProps()} />
+                        <input data-testid="file-input" {...getInputProps()} />
                         {!file && !isDragReject && !isDragAccept && (
                             <Typography
                                 sx={{ textAlign: 'center', width: '250px' }}
