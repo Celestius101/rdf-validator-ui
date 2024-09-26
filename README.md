@@ -43,7 +43,7 @@ _RDF Validator_ is a user interface which improves the understandability and usa
 
 - Docker 23.0 or higher **with BuildKit enabled**
 - Yarn 1.22.x or higher || npm 10.8.x or higher
-- Node 20.17.0 or lower ([js-dom issues](https://github.com/jsdom/jsdom/issues/3613))
+- Node 20.17.0 or higher ([js-dom issues with tests](https://github.com/jsdom/jsdom/issues/3613))
 - Windows, macOS, or Linux operating system
 - A stable and good internet connection
 
