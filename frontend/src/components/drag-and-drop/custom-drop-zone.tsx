@@ -62,14 +62,6 @@ const CustomDropZone: FC<Props> = ({ text, onSelectFile }) => {
         <Dropzone
             maxFiles={1}
             accept={{ 'text/turtle': ['.ttl'] }}
-            validator={(file) => {
-                if (file.type === 'text/turtle') return null;
-                else
-                    return {
-                        code: 'file-invalid-type',
-                        message: `Invalid file type. Please upload a turtle file.`,
-                    };
-            }}
             onDropAccepted={(files) => {
                 onSelectFile(files[0]);
                 setFile(files[0]);
