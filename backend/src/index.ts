@@ -13,8 +13,7 @@ const docker: Docker = new Docker();
 const upload = multer({
   dest: "uploads/",
   fileFilter: (_, file, cb) => {
-    return file.mimetype === "text/turtle" &&
-      path.extname(file.originalname).toLowerCase() === ".ttl"
+    return path.extname(file.originalname).toLowerCase() === ".ttl"
       ? cb(null, true)
       : cb(new Error("Validation server accepting only turtle files."));
   },
